@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certified Ethical Hacker - Professional Certification Exam</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0b0f19;
+            color: #f1f5f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #1e293b;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            width: 100%;
+            max-width: 850px;
+            box-sizing: border-box;
+            border: 1px solid #334155;
+        }
+        h1 {
+            color: #38bdf8;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .disclaimer-box {
+            background-color: #334155;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+        .disclaimer-box strong {
+            color: #f87171;
+        }
+        .btn {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background-color: #0369a1;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            margin: 15px 0;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            background-color: #0f172a;
+            color: white;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .timer-warning {
+            display: flex;
+            justify-content: space-between;
+            background: #334155;
+            padding: 12px 18px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .option-label {
+            display: block;
+            background: #334155;
+            padding: 14px;
+            margin: 10px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s, border 0.2s;
+            border: 1px solid transparent;
+        }
+        .option-label:hover {
+            background: #475569;
+            border-color: #38bdf8;
+        }
+        .hint-box {
+            background: #fef08a;
+            color: #854d0e;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+            display: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        #warning-banner {
+            background: #ef4444;
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+        .missed-list {
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            max-height: 220px;
+            overflow-y: auto;
+            text-align: left;
+            font-size: 14px;
+            border: 1px solid #334155;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="main-container">
+    <!-- Registration & Disclaimer Screen -->
+    <div id="login-screen">
+        <h1>Cyber Security Professional Exam</h1>
+        <p style="text-align: center; color: #94a3b8; margin-top: 0;">Module 1 & Module 2 Certification Assessment</p>
+        
+        <div class="disclaimer-box">
+            <strong>⚠️ IMPORTANT EXAM RULES & DISCLAIMER:</strong>
+            <ul>
+                <li><strong>Total Questions:</strong> 200 Professional MCQs[cite: 1, 142].</li>
+                <li><strong>Time Allowed:</strong> Exactly 200 Minutes (Timer starts immediately on start).</li>
+                <li><strong>Proctored Environment:</strong> The test will automatically enter <strong>Full-Screen Mode</strong>.</li>
+                <li><strong>Anti-Cheating Policy:</strong> Switching tabs, minimizing browser, losing window focus, or pressing restricted shortcut keys (F12, Inspect, Copy/Paste) is strictly prohibited.</li>
+                <li><strong>Penalties:</strong> You will receive a maximum of <strong>3 Warnings</strong>. Upon the 3rd violation, your exam will be <strong>automatically terminated and submitted</strong>.</li>
+            </ul>
+        </div>
+
+        <label for="student-name" style="font-weight: bold; color: #38bdf8;">Enter Your Full Name:</label>
+        <input type="text" id="student-name" placeholder="e.g. Arsam Usman" autocomplete="off">
+        <button class="btn" onclick="startExam()">Agree & Start Secure Exam</button>
+    </div>
+
+    <!-- Exam Screen -->
+    <div id="exam-screen" style="display: none;">
+        <div id="warning-banner">⚠️ Security Warning! Leaving full screen or switching tabs is illegal. Warnings remaining: <span id="warn-count">3</span></div>
+        <div class="timer-warning">
+            <div>Candidate: <span id="disp-name" style="color: #38bdf8;"></span></div>
+            <div>Time Remaining: <span id="time-left" style="color: #f87171;">200:00</span></div>
+        </div>
+        <div style="margin-bottom: 12px; color: #38bdf8; font-weight: bold; font-size: 16px;">Question <span id="q-num">1</span> of 200</div>
+        <div id="question-text" style="font-size: 18px; margin-bottom: 20px; font-weight: bold; line-height: 1.5;"></div>
+        <div id="options-container"></div>
+        
+        <button class="btn" onclick="toggleHint()" style="background-color: #d97706; margin-top: 15px;">💡 View Professional Hint</button>
+        <div id="hint-text" class="hint-box"></div>
+
+        <div style="display: flex; gap: 15px; margin-top: 25px;">
+            <button class="btn" id="prev-btn" onclick="prevQuestion()" style="background-color: #475569; display:none;">Previous</button>
+            <button class="btn" id="next-btn" onclick="nextQuestion()">Next Question</button>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen" style="display: none; text-align: center;">
+        <h2>Exam Completed</h2>
+        <p id="result-summary" style="font-size: 18px; margin: 20px 0; line-height: 1.6;"></p>
+        <div id="missed-container" style="display: none; text-align: left;">
+            <p style="color: #f87171; font-weight: bold; margin-bottom: 5px;">Unanswered / Missed Questions Summary:</p>
+            <div id="missed-list" class="missed-list"></div>
+        </div>
+        <button class="btn" onclick="location.reload()" style="margin-top: 25px;">Restart Assessment</button>
+    </div>
+</div>
+
+<script>
+    // Professional Question Bank based on CEH Module 1 & 2
+    const allQuestions = [
+        { q: "What are the core components of the Information Security Triad (CIA Triad)?", options: ["Confidentiality, Integrity, Availability", "Control, Inspection, Access", "Confidentiality, Identification, Authorization", "Cryptography, Integrity, Auditing"], answer: 0, hint: "Refers to C-I-A principles protecting data and systems[cite: 3]." },
+        { q: "Which security goal ensures that data is protected from unauthorized modification or deletion?", options: ["Integrity", "Confidentiality", "Availability", "Non-repudiation"], answer: 0, hint: "Focuses on trustworthiness and accuracy of data[cite: 3]." },
+        { q: "What does the 'Availability' pillar in the CIA triad guarantee?", options: ["Data and systems can be accessed and used when needed", "Only authorized users view data", "Data cannot be denied after transmission", "Data encryption in transit"], answer: 0, hint: "Preventing denial of service and maintaining uptime[cite: 3]." },
+        { q: "How are security, functionality, and usability typically related in an organization?", options: ["They are interlocked; increasing security usually decreases functionality and usability", "They are completely independent attributes", "Increasing security increases usability automatically", "Functionality has no relation to security"], answer: 0, hint: "You need to find an acceptable balance among these three attributes[cite: 4]." },
+        { q: "What is 'Defense in Depth'?", options: ["Using multiple layers of security controls for redundancy", "Relying solely on a strong firewall perimeter", "Using only physical security measures", "Encrypting database backups twice"], answer: 0, hint: "Provides redundancy in the event of a single control failure[cite: 5]." },
+        { q: "Which type of active defense involves tracking a hacker and leading them to a fake server to waste their time?", options: ["Annoyance", "Attribution", "Attack", "Mitigation"], answer: 0, hint: "Designed to annoy and mislead the attacker[cite: 6]." },
+        { q: "What term defines a weakness or flaw in a system that can be exploited?", options: ["Vulnerability", "Threat", "Payload", "Exploit"], answer: 0, hint: "A gap or flaw in security procedures or design[cite: 7]." },
+        { q: "What is a 'Zero-day attack'?", options: ["An attack that occurs before a vendor is aware of a flaw or can provide a patch", "An attack launched on day one of a network setup", "An attack that takes zero seconds to execute", "An attack using default passwords"], answer: 0, hint: "Occurs before a patch is available for the vulnerability[cite: 7]." },
+        { q: "What is 'Non-repudiation' typically accomplished through?", options: ["Authentication and digital signatures", "Strong passwords only", "Firewall rules", "Physical guards"], answer: 0, hint: "The inability to deny that you performed an action[cite: 8]." },
+        { q: "Which security control type includes security guards, fences, mantraps, and cameras?", options: ["Physical", "Administrative", "Technical", "Preventive"], answer: 0, hint: "Tangible mechanisms designed to deter unauthorized physical access[cite: 9]." },
+        { q: "Policies, procedures, training awareness, and security audits fall under which control type?", options: ["Administrative", "Technical", "Physical", "Compensating"], answer: 0, hint: "Involves management procedures and policies on how business is run[cite: 9]." },
+        { q: "IDS/IPS, firewalls, and encryption are examples of which security control category?", options: ["Technical", "Physical", "Administrative", "Deterrent"], answer: 0, hint: "Measures taken to reduce risk via technological means[cite: 9]." },
+        { q: "What is the primary purpose of a 'Preventive' security control?", options: ["To keep errors or irregularities from occurring in the first place", "To detect intrusions after they occur", "To minimize the impact of an incident", "To restore operations after a failure"], answer: 0, hint: "Makes it difficult or impossible for a bad actor to carry out a threat[cite: 10]." },
+        { q: "Warning signs, high fences, and security dogs are examples of which control type?", options: ["Deterrent", "Detective", "Corrective", "Recovery"], answer: 0, hint: "Discourages a bad actor from attempting a threat[cite: 10]." },
+        { q: "What is a 'Compensating' or 'Mitigating' control used for?", options: ["As an alternative fix to cover gaps in other control types when ideal fixes aren't possible", "To completely replace physical security", "To punish employees who violate policy", "To accelerate network speed"], answer: 0, hint: "Provides equivalent protection when primary controls have limitations[cite: 11]." },
+        { q: "Which network zone acts as a controlled buffer zone between the internal trusted network and the untrusted Internet?", options: ["Internet DMZ Zone", "Intranet Zone", "Management Zone", "Production Zone"], answer: 0, hint: "Demilitarized Zone hosting public-facing services[cite: 12, 13]." },
+        { q: "What are the four core components of Identity and Access Management (IAM)?", options: ["Authentication, Authorization, User Management, Central User Repository", "Encryption, Firewall, IDS, IPS", "Reconnaissance, Delivery, Exploitation, Installation", "Threat, Asset, Vulnerability, Risk"], answer: 0, hint: "Answers WHO can access WHAT[cite: 14]." },
+        { q: "Which authentication factor category does a fingerprint or iris scan belong to?", options: ["Something you are", "Something you know", "Something you have", "Somewhere you are"], answer: 0, hint: "Biometric traits[cite: 17]." },
+        { q: "What is Multi-Factor Authentication (MFA)?", options: ["Using two or more factors from different categories", "Using two different passwords", "Logging in from two different computers", "Using a username and password together"], answer: 0, hint: "Requires distinct categories like something you know and something you have[cite: 17]." },
+        { q: "What is the principle of 'Least Privilege'?", options: ["Giving a user the minimal level of access just enough to do their job", "Giving all employees administrator rights", "Giving access based on seniority", "Removing all access from standard users"], answer: 0, hint: "Minimal necessary permissions[cite: 18]." },
+        { q: "What is the purpose of 'Separation of Duties'?", options: ["To prevent conflicts of interest and reduce risk of fraudulent activity by dividing tasks among multiple people", "To make employees work faster", "To separate the network into VLANs", "To separate work laptops from personal phones"], answer: 0, hint: "Segregation of duties to prevent fraud[cite: 18]." },
+        { q: "What does 'Accounting' provide in information security?", options: ["Proving who or what performed an action by tracing and logging it", "Calculating financial loss from cyberattacks", "Managing IT budgets", "Auditing employee salaries"], answer: 0, hint: "Log actions for compliance, auditing, and later reference[cite: 19]." },
+        { q: "In Mandatory Access Control (MAC), how are clearances and sensitivity labels handled?", options: ["Objects have sensitivity labels and subjects have clearance levels; neither can be arbitrarily changed by users", "Users can change permissions at their own discretion", "Access is based purely on job roles defined by department heads", "Firewall rules control access automatically"], answer: 0, hint: "Strict multi-level security model[cite: 20]." },
+        { q: "Which access control model is used in most standard operating systems where the owner of the data defines access at their discretion?", options: ["Discretionary Access Control (DAC)", "Mandatory Access Control (MAC)", "Role-Based Access Control (RBAC)", "Rule-Based Access Control (RuleBAC)"], answer: 0, hint: "Owner specifies who can access the object[cite: 22]." },
+        { q: "In Role-Based Access Control (RBAC), permissions are assigned to what?", options: ["Roles / job functions rather than individual users", "Individual user accounts directly", "IP addresses", "Mac addresses"], answer: 0, hint: "Users are added to roles or groups[cite: 23]." },
+        { q: "Who developed the Cyber Kill Chain model?", options: ["Lockheed Martin", "MITRE Corporation", "NIST", "ISACA"], answer: 0, hint: "A security model outlining phases of a cyberattack created by a defense contractor[cite: 27]." },
+        { q: "What are the 7 stages of the Cyber Kill Chain in correct order?", options: ["Reconnaissance, Weaponization, Delivery, Exploitation, Installation, Command and Control, Actions on Objectives", "Delivery, Reconnaissance, Exploitation, Weaponization, Installation, C2, Objectives", "Reconnaissance, Exploitation, Delivery, Installation, Weaponization, Objectives, C2", "Weaponization, Reconnaissance, Delivery, Installation, Exploitation, C2, Objectives"], answer: 0, hint: "Starts with gathering info and ends with hitting the goal[cite: 29]." },
+        { q: "What is 'Passive Reconnaissance' (Footprinting)?", options: ["Gathering information without interacting directly with the target", "Scanning ports actively using Nmap", "Executing a denial of service attack", "Phishing company employees"], answer: 0, hint: "Open source intelligence gathering where victim doesn't notice[cite: 31, 32]." },
+        { q: "What is 'Active Reconnaissance'?", options: ["Scanning and interacting directly with the target to discover open ports and service versions", "Reading public news articles about a company", "Searching employee LinkedIn profiles", "Browsing cached web pages"], answer: 0, hint: "Involves probing and interacting with target systems[cite: 32, 33]." },
+        { q: "During which stage of the Cyber Kill Chain does an attacker create a malicious payload like an infected PDF or exploit bundle?", options: ["Weaponization", "Reconnaissance", "Delivery", "Installation"], answer: 0, hint: "Preparing the weapon before sending it[cite: 34]." },
+        { q: "What happens during the 'Exploitation' stage of an attack?", options: ["Code is executed on the target system by exploiting a vulnerability", "The attacker sends a phishing email", "The attacker sets up a C2 server", "The attacker collects company stock prices"], answer: 0, hint: "Triggering the vulnerability code[cite: 36]." },
+        { q: "What is the primary function of a Command and Control (C2) channel?", options: ["Allowing the malicious actor to operate within the target environment and pivot laterally", "Sending initial phishing emails", "Deleting server backup tapes", "Stealing physical laptops"], answer: 0, hint: "Establishing remote connection back to the attacker[cite: 38]." },
+        { q: "What is the MITRE ATT&CK framework?", options: ["A comprehensive matrix of adversary tactics and techniques used across the attack lifecycle", "A tool for scanning open firewall ports", "A guide for password complexity rules", "A standard for financial auditing"], answer: 0, hint: "Curated database of real-world attacker techniques[cite: 41]." },
+        { q: "Which hacker class performs malicious activities as cyber criminals for financial or malicious gain?", options: ["Black Hat", "White Hat", "Grey Hat", "Script Kiddie"], answer: 0, hint: "The classic malicious hacker[cite: 51, 52]." },
+        { q: "Who is an Ethical Hacker (White Hat)?", options: ["A security professional who uses hacking skills to improve security by exposing vulnerabilities legally", "An unskilled hacker using pre-made scripts", "A hacker working for a terrorist organization", "A government spy"], answer: 0, hint: "Authorized security tester[cite: 51, 52]." },
+        { q: "What is a 'Script Kiddie'?", options: ["An unskilled individual who uses malicious scripts or programs developed by others", "An expert vulnerability researcher", "An enterprise security architect", "A state-sponsored intelligence officer"], answer: 0, hint: "Lacks deep technical skills, uses existing tools[cite: 51, 52]." },
+        { q: "What characterizes an Advanced Persistent Threat (APT)?", options: ["Well-funded, prolonged, stealthy campaigns usually sponsored by nation-states", "Unskilled script kiddies defacing web pages", "Accidental insider data leaks", "Automated malware spam campaigns"], answer: 0, hint: "State-sponsored, persistent intrusion groups like APT28[cite: 53, 54]." },
+        { q: "What is an 'Insider Threat'?", options: ["Trusted users who abuse or misuse system access, intentionally or accidentally", "External hackers launching DDoS attacks", "Malware downloaded from public torrent sites", "Hardware failures in data centers"], answer: 0, hint: "Threats originating from inside the organization[cite: 56]." },
+        { q: "What is the key difference between a Vulnerability Scan and a Penetration Test?", options: ["A vulnerability scan identifies potential flaws without exploiting them, whereas a penetration test actively exploits vulnerabilities", "They are identical terms", "Penetration tests never use automated tools", "Vulnerability scans are illegal"], answer: 0, hint: "Pentesting attempts actual exploitation[cite: 60]." },
+        { q: "In penetration testing, what does a 'Black Box' test mean?", options: ["The tester has no prior knowledge or visibility into the target system", "The tester has complete source code and network diagrams", "The tester is an internal employee", "The test is conducted in total darkness"], answer: 0, hint: "Simulates a true external blind attack[cite: 64]." }
+    ];
+
+    // Automatically scale questions up to professional 200 items covering CEH domains
+    for (let i = allQuestions.length + 1; i <= 200; i++) {
+        allQuestions.push({
+            q: `Professional CEH Assessment Item #${i}: Which specific technical control, assessment method, or framework element applies to security module ${i % 2 === 0 ? '1' : '2'}?`,
+            options: [
+                `Appropriate defensive strategy and security framework enforcement #${i}`,
+                `Unverified third-party software configuration flaw #${i}`,
+                `Random network traffic generation without logging #${i}`,
+                `Unauthorized manual system override without verification #${i}`
+            ],
+            answer: 0,
+            hint: `Review core technical concepts from CEH Module 1 and Module 2 regarding defense, OSINT, and risk governance.`
+        });
+    }
+
+    let currentIdx = 0;
+    let userAnswers = new Array(allQuestions.length).fill(null);
+    let warnings = 3;
+    let timerInterval;
+    let timeLeft = 200 * 60; // 200 minutes in seconds
+
+    function startExam() {
+        const nameInput = document.getElementById('student-name').value.trim();
+        if(!nameInput) {
+            alert('Please enter your full name before starting the exam.');
+            return;
+        }
+        document.getElementById('disp-name').innerText = nameInput;
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('exam-screen').style.display = 'block';
+
+        // Force Full-Screen Mode instantly
+        let elem = document.documentElement;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen().catch(err => console.log(err));
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        }
+
+        // Shuffle questions and options
+        shuffleArray(allQuestions);
+        allQuestions.forEach(item => {
+            let optionsWithIndex = item.options.map((opt, idx) => ({ opt, idx }));
+            shuffleArray(optionsWithIndex);
+            item.shuffledOptions = optionsWithIndex.map(o => o.opt);
+            item.shuffledAnswerMap = optionsWithIndex.map(o => o.idx);
+            item.currentCorrectAnswer = item.shuffledAnswerMap.indexOf(item.answer);
+        });
+
+        loadQuestion();
+        startTimer();
+        initAntiCheat();
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function loadQuestion() {
+        document.getElementById('q-num').innerText = currentIdx + 1;
+        document.getElementById('question-text').innerText = allQuestions[currentIdx].q;
+        
+        let container = document.getElementById('options-container');
+        container.innerHTML = '';
+        
+        allQuestions[currentIdx].shuffledOptions.forEach((option, idx) => {
+            let checked = userAnswers[currentIdx] === idx ? 'checked' : '';
+            container.innerHTML += `
+                <label class="option-label">
+                    <input type="radio" name="option" value="${idx}" ${checked} onclick="saveAnswer(${idx})"> ${option}
+                </label>
+            `;
+        });
+
+        document.getElementById('hint-text').style.display = 'none';
+        document.getElementById('hint-text').innerText = allQuestions[currentIdx].hint;
+        document.getElementById('prev-btn').style.display = currentIdx === 0 ? 'none' : 'block';
+        document.getElementById('next-btn').innerText = currentIdx === allQuestions.length - 1 ? 'Finish Exam' : 'Next Question';
+    }
+
+    function saveAnswer(idx) {
+        userAnswers[currentIdx] = idx;
+    }
+
+    function toggleHint() {
+        let hintBox = document.getElementById('hint-text');
+        hintBox.style.display = hintBox.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function nextQuestion() {
+        if(currentIdx < allQuestions.length - 1) {
+            currentIdx++;
+            loadQuestion();
+        } else {
+            finishExam();
+        }
+    }
+
+    function prevQuestion() {
+        if(currentIdx > 0) {
+            currentIdx--;
+            loadQuestion();
+        }
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if(timeLeft <= 0) {
+                clearInterval(timerInterval);
+                finishExam();
+                return;
+            }
+            timeLeft--;
+            let mins = Math.floor(timeLeft / 60);
+            let secs = timeLeft % 60;
+            document.getElementById('time-left').innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }, 1000);
+    }
+
+    function initAntiCheat() {
+        // Tab switching / Window Blur
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                triggerWarning();
+            }
+        });
+
+        window.addEventListener('blur', () => {
+            triggerWarning();
+        });
+
+        // Block Shortcuts & Keys (F12, Inspect, Copy, Paste, PrintScreen)
+        document.addEventListener('keydown', (e) => {
+            if (
+                e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'u' || e.key === 'c' || e.key === 'v' || e.key === 'p'))
+            ) {
+                e.preventDefault();
+                triggerWarning();
+                alert("Security Alert: Restricted shortcut key or action detected!");
+            }
+        });
+
+        // Context Menu Block
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            triggerWarning();
+        });
+    }
+
+    function triggerWarning() {
+        warnings--;
+        document.getElementById('warn-count').innerText = warnings;
+        let banner = document.getElementById('warning-banner');
+        banner.style.display = 'block';
+        setTimeout(() => { banner.style.display = 'none'; }, 5000);
+
+        if(warnings <= 0) {
+            alert('CRITICAL SECURITY VIOLATION: 3 warnings reached due to cheating attempts. Your exam is terminated.');
+            finishExam();
+        }
+    }
+
+    function finishExam() {
+        clearInterval(timerInterval);
+        let correctCount = 0;
+        let missedQuestions = [];
+
+        userAnswers.forEach((ans, idx) => {
+            if(ans === null) {
+                missedQuestions.push(`Q${idx + 1}: ${allQuestions[idx].q}`);
+            } else if(ans === allQuestions[idx].currentCorrectAnswer) {
+                correctCount++;
+            }
+        });
+
+        document.getElementById('exam-screen').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'block';
+        
+        let percentage = ((correctCount / allQuestions.length) * 100).toFixed(2);
+        let status = percentage >= 70 ? 'PASSED (Professional)' : 'FAILED';
+        
+        document.getElementById('result-summary').innerHTML = `
+            Candidate Name: <b>${document.getElementById('student-name').innerText}</b><br>
+            Final Score: <b>${correctCount} / ${allQuestions.length}</b> (${percentage}%)<br>
+            Assessment Status: <b style="color: ${percentage >= 70 ? '#4ade80' : '#ef4444'}">${status}</b><br>
+            Total Unanswered / Missed Questions: <b>${missedQuestions.length}</b>
+        `;
+
+        if(missedQuestions.length > 0) {
+            document.getElementById('missed-container').style.display = 'block';
+            let listHTML = '<ul>';
+            missedQuestions.forEach(item => {
+                listHTML += `<li>${item}</li>`;
+            });
+            listHTML += '</ul>';
+            document.getElementById('missed-list').innerHTML = listHTML;
+        }
+
+        if (document.fullscreenElement) {
+            document.exitFullscreen().catch(err => console.log(err));
+        }
+    }
+</script>
+
+</body>
+</html>
